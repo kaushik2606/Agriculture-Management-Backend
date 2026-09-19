@@ -2,6 +2,7 @@ const express = require('express');
 const Farmer = require('../models/farmer');
 const Farm = require('../models/farm');
 
+// Add New Farm
 const addFarm = async (req, res) => {
   try {
     const {
@@ -70,6 +71,7 @@ const addFarm = async (req, res) => {
   }
 };
 
+// Get All Farms
 const getFarm = async (req, res) => {
   try {
     const farm = await Farm.find({}).populate({
@@ -99,6 +101,7 @@ const getFarm = async (req, res) => {
   }
 };
 
+// Get Farm By Id
 const getFarmById = async (req, res) => {
   try {
     const { farmId } = req.params;
@@ -129,6 +132,7 @@ const getFarmById = async (req, res) => {
   }
 };
 
+// Update Farm By Id
 const updateFarm = async (req, res) => {
   try {
     const { farmId } = req.params;
@@ -180,6 +184,7 @@ const updateFarm = async (req, res) => {
   }
 };
 
+// Delete Farm By Id
 const deleteFarm = async (req, res) => {
   try {
     const { farmId } = req.params;

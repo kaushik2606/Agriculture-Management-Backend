@@ -4,6 +4,7 @@ const Farmer = require("../models/farmer");
 const crypto = require("crypto");
 const { sendMail } = require("../mail/emailSend");
 
+// Register Farmer
 const registerFarmer = async (req, res) => {
   try {
     const { id, name, email, password, role, profileImage, address, isActive } =
@@ -60,6 +61,7 @@ const registerFarmer = async (req, res) => {
   }
 };
 
+// Send OTP
 const sendOtp = async (req, res) => {
   try {
     const { email } = req.body || {};
@@ -133,6 +135,8 @@ const sendOtp = async (req, res) => {
   }
 };
 
+
+// Verify OTP
 const verifyOtp = async (req, res) => {
   try {
     const { email, otp } = req.body || {};
@@ -174,6 +178,7 @@ const verifyOtp = async (req, res) => {
   }
 };
 
+// Login Farmer
 const loginFarmer = async (req, res) => {
   try {
     const { email, password } = req.body || {};
@@ -229,6 +234,7 @@ const loginFarmer = async (req, res) => {
   }
 };
 
+// Get All Farmer
 const getFarmer = async (req, res) => {
   try {
     const farmer = await Farmer.find();

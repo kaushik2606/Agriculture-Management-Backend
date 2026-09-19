@@ -1,5 +1,6 @@
 const Crops = require("../models/crops");
 
+// Add Crops
 const addCrops = async (req, res) => {
   try {
     const {
@@ -33,24 +34,6 @@ const addCrops = async (req, res) => {
         message: "Please provide all required fields",
       });
     }
-
-    // const farmer = await Farmer.findOne({ id: farmerId });
-
-    // if (!farmer) {
-    //   return res.status(404).json({
-    //     success: false,
-    //     message: "Farmer with this id does not exist",
-    //   });
-    // }
-
-    // const farm = await Farm.findOne({ id: farmId });
-
-    // if (!farm) {
-    //   return res.status(404).json({
-    //     success: false,
-    //     message: "Farm with this id does not exist",
-    //   });
-    // }
 
     const crops = await Crops.create({
       farmerId,
@@ -93,6 +76,7 @@ const addCrops = async (req, res) => {
   }
 };
 
+// Get Crops
 const getCrops = async (req, res) => {
   try {
     const crops = await Crops.find({}).populate([
@@ -120,6 +104,7 @@ const getCrops = async (req, res) => {
   }
 };
 
+// Get Crops By Id
 const getCropId = async (req, res) => {
   try {
     const { cropId } = req.params;
@@ -157,6 +142,7 @@ const getCropId = async (req, res) => {
   }
 };
 
+// Update Crop By Id
 const updateCrops = async (req, res) => {
   try {
     const { cropId } = req.params;
@@ -216,6 +202,7 @@ const updateCrops = async (req, res) => {
   }
 };
 
+// Delete Crop By Id
 const deleteCrop = async (req, res) => {
   try {
     const { cropId } = req.params;
