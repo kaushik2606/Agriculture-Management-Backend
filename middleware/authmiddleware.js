@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const formerAccess = (req, res, next) => {
+const farmerAccess = (req, res, next) => {
   // 1. Get the token from the header
   const authHeader = req.headers.authorization;
 
@@ -21,4 +21,4 @@ const formerAccess = (req, res, next) => {
   }
 };
 
-module.exports = { formerAccess };
+module.exports = { farmerAccess };

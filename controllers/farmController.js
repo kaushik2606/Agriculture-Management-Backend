@@ -1,6 +1,6 @@
-const express = require('express');
-const Farmer = require('../models/farmer');
-const Farm = require('../models/farm');
+const express = require("express");
+const Farmer = require("../models/farmer");
+const Farm = require("../models/farm");
 
 // Add New Farm
 const addFarm = async (req, res) => {
@@ -17,7 +17,13 @@ const addFarm = async (req, res) => {
       longitude,
     } = req.body || {};
 
-    if (!farmerId || !farmName || !location || area === undefined || !areaUnit) {
+    if (
+      !farmerId ||
+      !farmName ||
+      !location ||
+      area === undefined ||
+      !areaUnit
+    ) {
       return res.status(400).json({
         success: false,
         message: "Please provide all required fields",
@@ -49,6 +55,7 @@ const addFarm = async (req, res) => {
       success: true,
       message: "Farm added successfully",
       data: {
+        _id,
         farmerId: farm.farmerId,
         farmName: farm.farmName,
         location: farm.location,
@@ -62,7 +69,6 @@ const addFarm = async (req, res) => {
         updatedAt: farm.updatedAt,
       },
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -92,7 +98,6 @@ const getFarm = async (req, res) => {
       message: "Farms fetched successfully",
       data: farm,
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -175,7 +180,6 @@ const updateFarm = async (req, res) => {
       message: "Farm updated successfully",
       data: farm,
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,

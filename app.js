@@ -4,7 +4,8 @@ const express = require("express");
 
 const farmerRoutes = require("./routes/farmerRoutes");
 const farmRoutes = require("./routes/farmRoutes");
-const cropsRoutes = require("./routes/cropsRoutes")
+const cropsRoutes = require("./routes/cropsRoutes");
+const soilTestRoutes = require("./routes/soilTestRoutes")
 
 const connectDB = require("./config/db");
 
@@ -18,6 +19,7 @@ connectDB();
 app.use("/api/farmers", farmerRoutes);
 app.use("/api/farm", farmRoutes);
 app.use("/api/crops", cropsRoutes);
+app.use("/api/soil-tests", soilTestRoutes)
 
 const PORT = process.env.PORT || 5000;
 
