@@ -16,18 +16,18 @@ const addSoilType = async (req, res) => {
     } = req.body || {};
 
     if (
-      (!farmerId,
-      !farmId,
-      !nitrogen,
-      !phosphorus,
-      !potassium,
-      !ph,
-      !moisture,
-      !soilType,
-      !testDate,
-      !recommendation)
+      !farmerId ||
+      !farmId ||
+      !nitrogen ||
+      !phosphorus ||
+      !potassium ||
+      !ph ||
+      !moisture ||
+      !soilType ||
+      !testDate ||
+      !recommendation
     ) {
-      return res.status(404).json({
+      return res.status(400).json({
         success: false,
         message: "Please provide all required fields",
       });
@@ -63,17 +63,31 @@ const addSoilType = async (req, res) => {
         recommendation: soil.recommendation,
       },
     });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
-const getSoilTest = async (req, res) => {
+const getSoilTestByFarmer = async (req, res) => {
   try {
-    const soil = await soilTest.find({}).populate([
+    const { farmerId } = req.params;
+
+    if (!farmerId) {
+      return res.status(400).json({
+        success: false,
+        message: "Soil farmer id is required",
+      });
+    }
+
+    const soilTests = await soilTest.find({ farmerId }).populate([
       { path: "farmerId", model: "Farmer", select: "-password" },
       { path: "farmId", model: "Farm", select: "-password" },
     ]);
 
-    if (!soil.length) {
+    if (!soilTests || soilTests.length === 0) {
       return res.status(404).json({
         success: false,
         message: "Soil Tests not found",
@@ -83,10 +97,46 @@ const getSoilTest = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Soil Tests fetched successfully",
-      data: soil,
+      data: soilTests,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getSoilTestById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Soil test id is required",
+      });
+    }
+
+    const soilRecord = await soilTest.findById(id).populate([
+      { path: "farmerId", model: "Farmer", select: "-password" },
+      { path: "farmId", model: "Farm", select: "-password" },
+    ]);
+
+    if (!soilRecord) {
+      return res.status(404).json({
+        success: false,
+        message: "Soil Test not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Soil Test fetched successfully",
+      data: soilRecord,
+    });
+  } catch (error) {
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
@@ -95,5 +145,6 @@ const getSoilTest = async (req, res) => {
 
 module.exports = {
   addSoilType,
-  getSoilTest
+  getSoilTestByFarmer,
+  getSoilTestById,
 };
